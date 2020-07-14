@@ -4,5 +4,5 @@ export const americanToBritishTitles = {
   'ms.': 'ms',
   'mx.': 'mx',
   'dr.': 'dr',
-  'prof.': 'prof'
-}
+  'prof.': 'prof',
+};

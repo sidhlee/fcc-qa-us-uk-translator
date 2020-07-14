@@ -9,7 +9,5 @@ import { americanToBritishTitles } from './american-to-british-titles.js';
   the client side
 */
 try {
-  module.exports = {
-
-  }
+  module.exports = {};
 } catch (e) {}
