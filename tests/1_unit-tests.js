@@ -20,7 +20,8 @@ suite('Unit Tests', () => {
       global.document = dom.window.document;
 
       Translator = require('../public/translator.js');
-      // you need to return inside .then
+      // Return resolved promise to prevent timeout error
+      return Promise.resolve(dom);
     });
   });
 
