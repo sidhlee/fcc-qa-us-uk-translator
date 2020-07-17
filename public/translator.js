@@ -70,7 +70,7 @@ const translateTime = (string, targetLocale = 'british', translatedWords) => {
   const pattern =
     targetLocale === 'british'
       ? /([\d]{1,2}):([\d]{1,2})/
-      : /([\d]{1,2}).([\d]{1,2})/;
+      : /([\d]{1,2})\.([\d]{1,2})/;
 
   let output = string.replace(pattern, (match, p1, p2) => {
     const delimiter = targetLocale === 'british' ? '.' : ':';
@@ -85,8 +85,8 @@ const translateTime = (string, targetLocale = 'british', translatedWords) => {
 const createRegex = (str, flag) => {
   const escaped = str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
   // 1. positive look behind for preventing 'chippy' from being translated to 'fish-and-fish-and-chip shop'
-  // 2. ending boundary to prevent matching 'chip' in 'chippy'
-  return new RegExp(`(?<=\\s)${escaped}\\b`, flag);
+  // 2. ending negative lookahead to prevent matching 'chip' in 'chippy'
+  return new RegExp(`(?<!-)${escaped}(?=\\W)`, flag);
 };
 
 /**
@@ -212,5 +212,7 @@ clearButton.addEventListener('click', () => {
   the client side
 */
 try {
-  module.exports = {};
+  module.exports = {
+    translate,
+  };
 } catch (e) {}
