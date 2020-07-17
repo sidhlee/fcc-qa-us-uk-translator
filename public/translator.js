@@ -86,7 +86,7 @@ const createRegex = (str, flag) => {
   const escaped = str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
   // 1. positive look behind for preventing 'chippy' from being translated to 'fish-and-fish-and-chip shop'
   // 2. ending negative lookahead to prevent matching 'chip' in 'chippy'
-  return new RegExp(`(?<!-)${escaped}(?=\\W)`, flag);
+  return new RegExp(`(?<!-)${escaped}(?!\\w)`, flag);
 };
 
 /**
@@ -176,6 +176,11 @@ const clearInput = () => {
   textArea.value = '';
 };
 
+const clearAll = () => {
+  clearOutput();
+  clearInput();
+};
+
 const handleTranslateClick = () => {
   const inputString = textArea.value;
   const targetLocale =
@@ -185,14 +190,14 @@ const handleTranslateClick = () => {
   clearOutput();
 
   if (!inputString.trim()) {
-    errorDiv.innerText = 'Error: No text to translate.';
+    errorDiv.textContent = 'Error: No text to translate.';
     return;
   }
   const { translation, translatedWords } = translate(inputString, targetLocale);
 
   const translationHTML = convertToHTML(translation, translatedWords);
   if (translatedWords.length === 0) {
-    outputDiv.innerText = 'Everything looks good to me!';
+    outputDiv.textContent = 'Everything looks good to me!';
     return;
   }
 
@@ -202,8 +207,7 @@ const handleTranslateClick = () => {
 translateButton.addEventListener('click', handleTranslateClick);
 
 clearButton.addEventListener('click', () => {
-  clearInput();
-  clearOutput();
+  clearAll();
 });
 
 /* 
@@ -214,5 +218,7 @@ clearButton.addEventListener('click', () => {
 try {
   module.exports = {
     translate,
+    handleTranslateClick,
+    clearAll,
   };
 } catch (e) {}
